@@ -7,3 +7,6 @@ Add platforms:
 $ cd convoy  
 $ phonegap cordova platform add ios  
 $ phonegap cordova platform add android  
+
+Add plugins:
+$ phonegap cordova plugin add cordova-plugin-geolocation

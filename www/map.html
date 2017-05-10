@@ -4,17 +4,16 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="css/map.css" />
+        <title>Map</title>
     </head>
-    <body>
-        <h1>Convoy</h1>
-        Username: <input type="text" name="username"><br/>
-        Password: <input type="text" name="password"><br/>
-        <a href="map.html">
-	        <button type="button">Login</button>
-        </a>
+    <body onload="onLoad()">
+	    <span id="field_altitude"></span>
+	    <span id="field_speed"></span>
+	    <span id="field_heading"></span>
+	    <div id="map"></div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
     </body>
 </html>
