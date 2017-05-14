@@ -33,11 +33,15 @@ function initMap() {
 		{
 		  center: {lat: -34.397, lng: 150.644},
 		  scrollwheel: false,
-		  zoom: 8
+		  zoom: 8,
+		  zoomControl: false,
+		  scaleControl: false,
+		  streetViewControl: false
 		}
 	);
 }
 
+// Called when a geolocation update has been received.
 function onGeolocationUpdate(p_position) {
 	
 	// Show location on Google Maps
@@ -61,16 +65,78 @@ function onGeolocationUpdate(p_position) {
 		map.setCenter(mapMarker.getPosition());
 	}
 	
-	// Update fields
-	document.getElementById("field_altitude").innerHTML = "Altitude: " + p_position.coords.altitude;
-	document.getElementById("field_speed").innerHTML = "Altitude: " + p_position.coords.speed;
-	document.getElementById("field_heading").innerHTML = "Altitude: " + p_position.coords.heading;
-}
-
-function onGeolocationError(p_error) {
+	// Remove geolocation loading message
+	document.getElementById("geolocationLoading").style.visibility = "hidden"; 
+	document.getElementById("geolocationLoaded").style.visibility = "visible"; 
 	
+	// Update fields
+	updateGeolocationFields(p_position.coords.speed, p_position.coords.heading, p_position.coords.altitude);
 }
 
+// Called when there is a gelocation error
+function onGeolocationError(p_error) {
+}
+
+// Updates the geolocation fields on the Map view
+function updateGeolocationFields(p_speed, p_heading, p_altitude) {
+	document.getElementById("field_altitude").innerHTML = parseAltitude(p_altitude) + "m";
+	document.getElementById("field_speed").innerHTML = parseSpeed(p_speed) + "Km/h";
+	document.getElementById("field_heading").innerHTML = parseHeading(p_heading);
+}
+
+// Parse the speed value from Geolocation
+function parseSpeed(p_speed) {
+	
+	// Check for unknown value
+	if(isNaN(p_speed)) {
+		return "- ";
+	}
+	
+	// Convert from metres per second to kilometres per hour
+	return Math.round(p_speed / 1000.0 * 60 * 60);	
+}
+
+// Parse the altitude value from Geolocation
+function parseAltitude(p_altitude) {
+	return Math.round(p_altitude);
+}
+
+// Parse the altitude value from Geolocation
+function parseHeading(p_heading) {
+	
+	// Check for unknown value
+	if(isNaN(p_heading)) {
+		return "";
+	}
+	
+	// Convert to compass direction
+	if(p_heading < 22.5 | p_heading > 337.5) {
+		return "N";
+	}
+	if(p_heading < 67.5) {
+		return "NE";
+	}
+	if(p_heading < 112.5) {
+		return "E";
+	}
+	if(p_heading < 157.5) {
+		return "SE";
+	}
+	if(p_heading < 202.5) {
+		return "S";
+	}
+	if(p_heading < 247.5) {
+		return "SW";
+	}
+	if(p_heading < 292.5) {
+		return "W";
+	}
+	if(p_heading < 337.5) {
+		return "NW";
+	}
+}
+
+// Disposes the App.
 function dispose() {
 	navigator.geolocation.clearWatch(geolocationWatchId);
 }

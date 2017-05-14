@@ -8,9 +8,19 @@
         <title>Map</title>
     </head>
     <body onload="onLoad()">
-	    <span id="field_altitude"></span>
-	    <span id="field_speed"></span>
-	    <span id="field_heading"></span>
+	    <div id="headerDiv">
+		    <div id="geolocationLoading">
+			    Finding Location
+			</div>
+			<div id="geolocationLoaded">
+			    <span id="field_speed">Loading speed...</span>
+				<span id="field_heading">Loading heading...</span>
+				<span id="field_altitude">Loading altitude...</span>
+			</div>
+			<div id="menuIconDiv">
+				<img src="img/icon_menu.png" id="menuIconImg">
+			</div>
+	    </div>
 	    <div id="map"></div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
